@@ -11,10 +11,10 @@ function get_packages!()
         dest = mkpath(joinpath(@__DIR__,kr))
         Downloads.download("https://zenodo.org/api/records/$vr/files-archive", joinpath(dest,"archive.zip"))
         # unpack L1
-        Base.run(`unzip $(joinpath(dest,"archive.zip")) -d $(dest) -q`)
+        Base.run(`unzip -q $(joinpath(dest,"archive.zip")) -d $(dest)`)
 
         # unpack L2
-        Base.run(`unzip $(joinpath(dest,"3-replication-package.zip")) -d $(dest) -q`)
+        Base.run(`unzip -q $(joinpath(dest,"3-replication-package.zip")) -d $(dest)`)
 
         @info "content of $(joinpath(dest,"3-replication-package"))"
         println(readdir(joinpath(dest,"3-replication-package")))
@@ -26,7 +26,10 @@ end
 function edit_burchardi!()
 
     # delete contents of Output/Tables
+    # and recreate an empty folder
     rm(joinpath(@__DIR__, "Burchardi", "3-replication-package", "Output","Tables"), recursive = true)
+    mkpath(joinpath(@__DIR__, "Burchardi", "3-replication-package", "Output","Tables"))
+
 
     # path to code
     p = joinpath(@__DIR__, "Burchardi", "3-replication-package", "Code")
