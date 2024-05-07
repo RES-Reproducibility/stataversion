@@ -112,14 +112,17 @@ function run()
     stata_docker_prog(broot,"Code/DEMED_Analysis_Master.do","16","2023-06-13")
 
     # rename the output table 
-    # for f in readdir(joinpath(broot,"Output","Tables"), join = true)
-    #     (p,ext) = splitext(f)
-    #     @info "renaming $f"
-    #     mv(f, joinpath(p * "-v16" * ext))
-    # end
-    # println(readdir(joinpath(broot,"Output","Tables"), join = true))
+    for f in readdir(joinpath(broot,"Output","Tables"), join = true)
+        (p,ext) = splitext(f)
+        @info "renaming $f"
+        mv(f, joinpath(p * "-v16" * ext))
+    end
+    println(readdir(joinpath(broot,"Output","Tables"), join = true))
 
-    # @info "run with stata 18"
-    # stata_docker_prog("Burchardi/3-replication-package","Code/DEMED_Analysis_Master.do","18","2024-04-30")
+    @info "run with stata 18"
+    stata_docker_prog("Burchardi/3-replication-package","Code/DEMED_Analysis_Master.do","18","2024-04-30")
 
+    @info "done 👋"
 end
+
+run()
